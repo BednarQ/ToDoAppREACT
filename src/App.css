@@ -1,33 +1,266 @@
-.App {
+
+body {
+  background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg");
+  height: 95%;
+  width: 100%;
+/*  background-position: center;*/
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.deck{
+  margin: 10% 0 10% 0;
+  width:100%;
+  flex-flow: row;
+  height: 100%;
+  text-align:center;
+  overflow-x: auto;
+}
+
+.row{
+  flex-wrap: nowrap;
+}
+.row .col.singleLine{
+  padding-top: 20px;
+}
+.listMenuBtn{
+  top: -20px;
+  right: 0;
+  margin-left:10px;
+}
+.listMenuBtnContainer{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.singleLine{
+  max-width: 22% !important;
+  min-width: 22% !important;
+  transition: all 600ms;
+}
+
+.container{
+  max-width: 100%;
+
+}
+.addLineContainer{
+  position:absolute;
+  left:0;
+  transition: 500ms;
+}
+.card{
+  background: rgba(255,255,255,0.8);
+}
+/*.card:hover{
+  background: rgba(255,255,255,1);
+}*/
+.addNewLine.card-body{
+  padding: 0 1.25rem 0 1.25rem;
+}
+.card .card-title{
+  margin: 0 !important;
+  padding: 10px 0 10px 0;
+  position: relative;
+}
+
+.col .card{
+  min-height: 11rem;
+
+}
+.col .card .card-title{
+  border-bottom: 1px solid #e2e2e2;
+
+}
+
+.singleCard{
+  border: 1px solid black;
+  width: 100%;
+  margin-bottom: 50px;
+  border-radius: 10px;
+  background-color: #9ec0d1;
+}
+
+.tasksContainer{
+  width: 100% !important;
+  border-radius:10px;
+}
+.tasksContainer .card{
+  width: 100% !important;
+  border-radius:10px;
+}
+.tasksContainer .card h4{
+  font-weight: bold;
+  text-align: left;
+}
+.tasksContainer .card .card-body{
+  background-color: #f9f8fe;
+  border-radius:10px;
+}
+.addNewTaskList{
+  position: absolute;
+  right: -20px;
+  transition: all 800ms;
+}
+.addNewTaskEmpty{
+  position: absolute;
+  right: 40%;
+  transition: all 800ms;
+}
+.hideElement{
+  visibility: hidden;
+  opacity: 0;
+  transition:visibility 0.3s linear,opacity 0.3s linear;
+}
+.show{
+  visibility: visible !important;
+  opacity: 1;
+  transition:visibility 0.3s linear,opacity 0.3s linear;
+}
+.collapse{
+  visibility: collapse;
+  transition: 500ms;
+}
+
+
+.noBorder{
+  border:none;
+}
+.border{
+  border: 1px solid grey;
+}
+
+.addNewLine .initialBtn{
+  left:0;
+  top: 2rem;
+  transition: all 800ms;
+}
+.addNewLine .addBtn{
+  top: 10rem;
+  left: 10.5rem;
+  transition: all 800ms;
+}
+
+.label{
+  margin-left: 12%;
+  color: grey;
+}
+
+.modal{
+  background-color: transparent;
+  width: auto;
+  max-height: none;
+  top:20%;
+  webkit-box-shadow: none;
+  box-shadow: none;
+
+}
+.activeBtn{
+  background-color: #43BB7B;
+}
+
+.singleTaskContainer{
+  min-height:5rem !important;
+}
+.singleTaskBody{
+  position:relative;
+}
+.singleTaskMenuContainer{
+  position: absolute;
+  right: -25%;
+  top: 0;
+  width: 200px;
+  height: 30px;
+}
+
+.singleTaskMenuButtonsContainer .listMenuBtn{
+  top: -40px;
+  right: 60%;
+}
+.singleTaskMenuButtonsContainer .listMenuBtn.btn-floating.btn-smallx i {
+  line-height: 30px;
+  margin-top: -15px;
+  font-size: 1rem;
+}
+
+.btn-smallx{
+  width: 25px;
+  height: 25px;
+}
+
+.editListName{
+  margin-left:3rem;
+  margin-right:3rem;
+}
+
+.saveEditListName{
+  top: 4.5rem;
+  right: -5rem;
+  transition: all 500ms;
+  background-color:#43BB7B !important;
+}
+
+.lineItemTitle{
+  margin-top: 10px;
+  visibility: visible;
+  transition: all 500ms;
+}
+
+.priorityBadge{
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  left: -1px;
+  top: -1px;
+  border-top-left-radius: 30%;
+  border-bottom-right-radius: 80%;
+}
+.priorityHigh{
+  background-color: #f16468;
+}
+.priorityModern{
+  background-color: #2BBBAD;
+}
+.priorityLow{
+  background-color: #8c8c8c;
+}
+.priorityOptional{
+  background-color: #7abcdb;
+}
+.priority5{
+  background-color: #a4a7f1;
+}
+
+.modal-dialog.cascading-modal .modal-header {
+  -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+  box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
+  margin: -2rem 1rem 1rem 1rem;
+  border: none;
+  -webkit-border-radius: .125rem;
+  border-radius: .125rem;
+  padding: 1.5rem;
   text-align: center;
+  margin-top: -50px;
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
+.noBackgroundColor{
+  background-color:transparent !important;
+}
+.btn-floating.lightRed:hover {
+  background-color: #f18c99;
+}
+.btn-floating.lightBlue:hover {
+  background-color: #45b2db;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
+.lightRed {background-color: #f16468;}
+.lightGreen{ background-color: #2BBBAD; }
+.lightGrey { color: #8c8c8c; }
+.lightBlue { background-color: #7abcdb; }
+.lightPurple {background-color: #a4a7f1;}
 
-.App-link {
-  color: #61dafb;
-}
+.material-icons.lightGrey { color: #8c8c8c; }
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
