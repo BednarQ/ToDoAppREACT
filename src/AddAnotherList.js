@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBBtn, MDBCol,MDBCardImage,MDBIcon , MDBRow, MDBContainer,MDBInput  } from "mdbreact";
+import { MDBCard, MDBCardBody, MDBCol, MDBRow,} from "mdbreact";
 
 class AddAnotherList extends Component{
     constructor(props) {
@@ -10,8 +10,9 @@ class AddAnotherList extends Component{
             name : '',
             isInput : false,
             isHovered : false,
-            singleList : true
-        }
+            singleList : true,
+            itemsCounter : 0
+        };
 
         this.changeMode = this.changeMode.bind(this);
         this.createNewList = this.createNewList.bind(this);
@@ -24,9 +25,7 @@ class AddAnotherList extends Component{
         if(this.state.isInput && this.state.name !== "") this.createNewList();
     }
     createNewList(){
-        console.log(this.state.singleList);
         this.props.addList(this.state.name);
-        document.getElementById('addLIst').style.left = parseFloat(getComputedStyle(document.getElementById('addLIst')).left) + 350+ 'px';
 
     }
 
@@ -38,13 +37,13 @@ class AddAnotherList extends Component{
     }
 
 
-
     render(){
         return(
-            <MDBCol id='addLIst' className={classNames('singleLine animated fadeInRight addLineContainer')}>
+            <MDBCol id='addLIst' className={classNames('singleLine animated fadeInRight addLineContainer')} style={{left: this.props.list.length*350+'px'}}>
                 <MDBCard >
+
                     <MDBCardBody className="addNewLine">
-                        <a className={classNames('btn-floating waves-effect waves-light',{'lightGreen' : this.state.isInput && this.state.name !== ""}, {'lightRed' : this.state.isInput && this.state.name === ""}, {'pulse': this.state.isHovered},{'btn-large initialBtn' : !this.state.isInput}, {'btn-small addBtn' : this.state.isInput})} onClick={this.changeMode} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
+                        <a href="#" className={classNames('btn-floating waves-effect waves-light',{'lightGreen' : this.state.isInput && this.state.name !== ""}, {'lightRed' : this.state.isInput && this.state.name === ""}, {'pulse': this.state.isHovered},{'btn-large initialBtn' : !this.state.isInput}, {'btn-small addBtn' : this.state.isInput})} onClick={this.changeMode} onMouseEnter={this.toggleHover} onMouseLeave={this.toggleHover}>
                             <i className="align-middle material-icons">{!this.state.isInput ? "add" : this.state.name==="" ? "close" : "add" }</i>
                         </a>
                         <div className={classNames('addNewLine', {'collapse' : !this.state.isInput})}>
