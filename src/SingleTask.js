@@ -97,7 +97,6 @@ function SingleTask(props) {
 
                     <div className={classNames('taskDescription', {'collapse': isEdit})}>
                         {task.description}
-                        {task.isMoving ? 'true' : 'false'}
                     </div>
                     <div className={classNames({'hide': !isEdit})}>
                         <div className="input-field editListName">
