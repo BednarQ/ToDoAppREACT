@@ -267,6 +267,9 @@ body {
     border-top-left-radius: 30%;
     border-bottom-right-radius: 80%;
 }
+.modal {
+    top: 0;
+}
 
 .priorityHigh {
     background-color: #f16468;
@@ -288,10 +291,6 @@ body {
     background-color: #7abcdb;
 }
 
-.priority5 {
-    background-color: #a4a7f1;
-}
-
 .modal-dialog.cascading-modal .modal-header {
     -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
     box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
@@ -304,10 +303,43 @@ body {
     margin-top: -50px;
 }
 
+.issueBtn{
+    background-color: #f14946
+}
+.activeIssueBtn{
+    background-color: #f16a75;
+}
+.issueBtn:hover {
+    background-color: #f18c99;
+}
+.issueBtn:focus {
+    background-color: #f18c99;
+    box-shadow: none;
+}
+
+.featureBtn{
+    background-color: #7981f1
+}
+.activeFeatureBtn{
+    background-color: #9ca8f1;
+}
+.featureBtn:hover {
+    background-color: #9ca8f1;
+}
+.featureBtn:focus {
+    background-color: #9ca8f1;
+    box-shadow: none;
+}
+.userIcon{
+    font-size: 30px;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+
 .noBackgroundColor {
     background-color: transparent !important;
 }
-
 .btn-floating.lightRed:hover {
     background-color: #f18c99;
 }

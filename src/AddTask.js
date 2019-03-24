@@ -1,6 +1,17 @@
 import React, { Component } from 'react';
-import { MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter,MDBRow,MDBCol,MDBBtnGroup} from 'mdbreact';
+import {MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter,MDBRow,MDBCol,MDBBtnGroup } from 'mdbreact';
+import { AutoComplete } from 'antd';
 import classNames from "classnames";
+import 'antd/dist/antd.css';
+
+const avaliableUsers = [
+    'Mateusz Bednarek',
+    'Mateusz Wolak-Ksiazek',
+    'Jakub Sołtys' ,
+    'Piotr Gagatek',
+    'Andrzej Jarzyna'
+];
+
 
 class AddTask extends Component {
     constructor(props) {
@@ -9,15 +20,22 @@ class AddTask extends Component {
         this.state = {
             modal: false,
             taskDesc : '',
-            taskPriority : 'High'
+            taskTitle : '',
+            taskPriority : 'High',
+            taskType : 'Issue'
         };
 
         this.toggle = this.toggle.bind(this);
         this.createNewTask = this.createNewTask.bind(this);
         this.setDescription = this.setDescription.bind(this);
         this.setPriority = this.setPriority.bind(this);
+        this.setTitle = this.setTitle.bind(this);
+        this.setType = this.setType.bind(this);
 
     }
+
+
+
 
 
 
@@ -42,7 +60,13 @@ class AddTask extends Component {
     };
     setPriority(event){
         this.setState({taskPriority: event.target.id});
+    }
+    setType(event){
+        this.setState({taskType: event.target.id});
     };
+    setTitle(event){
+        this.setState({taskTitle: event.target.value});
+    }
 
 
     render() {
@@ -50,31 +74,67 @@ class AddTask extends Component {
             <MDBContainer>
                 <MDBModal cascading isOpen={this.state.modal} toggle={this.toggle} className="addTaskModal">
                     <MDBModalHeader className="modal-dialog.cascading-modal text-center text-white lightGreen darken-3" titleClass="w-100" tag="h5" toggle={this.toggle}>
-                            Create new task!
+                           New Task
                     </MDBModalHeader>
+
+                    <p className="text-lg-left label">Priority</p>
+                    <MDBRow>
+                        <MDBCol>
+                            <MDBBtnGroup>
+                                <MDBBtn id="High" onClick={this.setPriority} className={classNames({'activeBtn' : this.state.taskPriority === 'High'})}>High</MDBBtn>
+                                <MDBBtn id="Modern" onClick={this.setPriority} className={classNames({'activeBtn' : this.state.taskPriority === 'Modern'})}>Modern</MDBBtn>
+                                <MDBBtn id="Low" onClick={this.setPriority} className={classNames({'activeBtn' : this.state.taskPriority === 'Low'})}>Low</MDBBtn>
+                                <MDBBtn id="Optional" onClick={this.setPriority} className={classNames({'activeBtn' : this.state.taskPriority === 'Optional'})}>Optional</MDBBtn>
+                            </MDBBtnGroup>
+                        </MDBCol>
+                    </MDBRow>
+                    <p className="text-lg-left label">Type</p>
+                    <MDBRow>
+                        <MDBCol>
+                            <MDBBtnGroup>
+                                <MDBBtn id="Issue" onClick={this.setType} className={classNames({'activeBtn' : this.state.taskType === 'Issue'})}>Issue</MDBBtn>
+                                <MDBBtn id="Feature" onClick={this.setType} className={classNames({'activeBtn' : this.state.taskType === 'Feature'})}>Feature</MDBBtn>
+                            </MDBBtnGroup>
+                        </MDBCol>
+                    </MDBRow>
                     <MDBModalBody className="text-center">
                         <div className="row">
                             <form className="col s12">
                                 <div className="row">
                                     <div className="input-field col s6">
-                                        <i className="material-icons prefix">mode_edit</i>
+                                        <i className="material-icons prefix">title</i>
+                                        <input id="list_name" type="text" className="" value={this.state.taskTitle} onChange={this.setTitle}/>
+                                        <label htmlFor="list_name">Title</label>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="input-field col s6">
+                                        <i className="material-icons prefix">comment</i>
                                         <textarea id="icon_prefix2" className="materialize-textarea" value={this.state.taskDesc} onChange={this.setDescription}/>
                                         <label htmlFor="icon_prefix2">Meaningful description</label>
                                     </div>
                                 </div>
+                                <div className="row">
+                                    <i className="material-icons prefix userIcon">face</i>
+
+                                    <div className="input-field col s6">
+                                        <AutoComplete
+                                            id = "userInput"
+                                            dataSource={avaliableUsers}
+                                            placeholder="Assignee"
+                                            filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
+                                        />
+                                    </div>
+                                </div>
                             </form>
                         </div>
-                        <p className="text-lg-left label">Priority</p>
-                        <MDBRow>
-                            <MDBCol>
-                                <MDBBtnGroup horizontal>
-                                    <MDBBtn id="High" onClick={this.setPriority} className={classNames({'activeBtn' : this.state.taskPriority === 'High'})}>High</MDBBtn>
-                                    <MDBBtn id="Modern" onClick={this.setPriority} className={classNames({'activeBtn' : this.state.taskPriority === 'Modern'})}>Modern</MDBBtn>
-                                    <MDBBtn id="Low" onClick={this.setPriority} className={classNames({'activeBtn' : this.state.taskPriority === 'Low'})}>Low</MDBBtn>
-                                    <MDBBtn id="Optional" onClick={this.setPriority} className={classNames({'activeBtn' : this.state.taskPriority === 'Optional'})}>Optional</MDBBtn>
-                                </MDBBtnGroup>
-                            </MDBCol>
-                        </MDBRow>
+                        <div className="row">
+
+
+
+                        </div>
+
+
                     </MDBModalBody>
                     <MDBModalFooter className="noBackgroundColor noBorder">
                         <a href="#" className="btn-floating btn-medium waves-effect waves-light lightRed"><i
