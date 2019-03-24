@@ -11,14 +11,14 @@ function SingleList(props) {
         if(localStorage.getItem(props.item.id)){
             return JSON.parse(localStorage.getItem(props.item.id));
         }
-        return [];
+        return props.tasks == undefined ? [] : props.tasks;
     };
 
     const [style, setStyle] = useState('singleLine animated fadeInRight');
     const [taskList, setTaskList] = useState(initialState);
     const [isHovered, setHovered] = useState(false);
     const [showModal, setModal] = useState(false);
-    const [item, setItem] = useState({name: props.item.name, id: props.item.id});
+    const [item, setItem] = useState({name: props.item.name, id: props.item.id, index: props.index});
     const [isEdit, setEdit] = useState(false);
 
 
@@ -40,9 +40,12 @@ function SingleList(props) {
 
 
     const addTask = (taskObj) => {
-        console.log(taskObj.listId);
         setTaskList([...taskList, taskObj]);
     };
+
+    const cloneCurrentList = () => {
+        props.clone(item, JSON.stringify(taskList));
+    }
 
     const toggleHover = () => {
         setHovered(!isHovered);
@@ -104,7 +107,7 @@ function SingleList(props) {
                            className={classNames('float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightRed')}>
                             <i className="align-middle material-icons">remove</i>
                         </a>
-                        <a href="#" title="Clone list"
+                        <a href="#" title="Clone list" onClick={cloneCurrentList}
                            className={classNames('float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightPurple')}>
                             <i className="align-middle material-icons">call_split</i>
                         </a>

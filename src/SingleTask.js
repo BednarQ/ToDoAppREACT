@@ -41,18 +41,10 @@ function SingleTask(props) {
         }
     },[task]);
 
-    const onDragStart = (event, task) => {
-        setTask({...task, isMoving: true});
-    };
-
-    const onDragOver=(event, task) => {
-        setTask({...task, isMoving: false});
-    };
-
 
     return (
-        <MDBRow className={classNames({'hideElement' : task.isMoving })}>
-            <MDBCard className='singleTaskContainer animated fadeInRight'  draggable="true" onDragStart={(e)=>onDragStart(e, task)} onDragOver={(e) => onDragOver(e, task)}>
+        <MDBRow>
+            <MDBCard className='singleTaskContainer animated fadeInRight'>
 
                 <MDBCardBody className="singleTaskBody">
                     <div className={classNames(
