@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {MDBCard, MDBCardBody, MDBRow} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBRow,MDBCardTitle} from "mdbreact";
+import { Avatar } from 'antd';
 import classNames from "classnames";
 
 
@@ -9,7 +10,17 @@ function SingleTask(props) {
     const [showMenu, setShowMenu] = useState(false);
     const [hasLoaded, setLoaded] = useState(false);
     const [isEdit, setEdit] = useState(false);
-    const [task, setTask] = useState({description: props.taskObj.description, listId: props.taskObj.listId, id: props.taskObj.id, isMoving : false});
+    const [task, setTask] = useState(
+        {
+            title: props.taskObj.title,
+            description: props.taskObj.description,
+            listId: props.taskObj.listId,
+            id: props.taskObj.id,
+            assignee: props.taskObj.assignee,
+            priority : props.taskObj.priority,
+            type: props.taskObj.type,
+            initials: props.taskObj.assignee.split(" ")[0].charAt(0) + props.taskObj.assignee.split(" ")[1].charAt(0)
+        });
 
     const toggleMenu = () => {
         if(isEdit) setEdit(false);
@@ -62,7 +73,9 @@ function SingleTask(props) {
                             <i className="align-middle material-icons">{isEdit ? 'save' : 'edit'}</i>
                         </a>
                     </div>
-                    <div className={badgeStyle}/>
+                    <div className={badgeStyle}>
+                        <i className="align-middle material-icons">{task.type === 'Issue' ? 'bug_report' : 'extension'}</i>
+                    </div>
                     <div className="singleTaskMenuContainer">
 
                         <a href="#" onClick={toggleMenu}>
@@ -88,7 +101,16 @@ function SingleTask(props) {
 
 
                     <div className={classNames('taskDescription', {'collapse': isEdit})}>
-                        {task.description}
+                        <p className="taskTitle">
+                            {task.title}
+                        </p>
+                        <p className="taskDescription">
+                            {task.description}
+                        </p>
+                        <p title={task.assignee} className="taskAssignee">
+                            <Avatar className={'priority' + task.priority} style={{ color: '#FFFFFF'}}>{task.initials}</Avatar>
+                        </p>
+
                     </div>
                     <div className={classNames({'hide': !isEdit})}>
                         <div className="input-field editListName">

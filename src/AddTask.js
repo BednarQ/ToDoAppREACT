@@ -22,7 +22,8 @@ class AddTask extends Component {
             taskDesc : '',
             taskTitle : '',
             taskPriority : 'High',
-            taskType : 'Issue'
+            taskType : 'Issue',
+            taskAssignee : ''
         };
 
         this.toggle = this.toggle.bind(this);
@@ -31,6 +32,7 @@ class AddTask extends Component {
         this.setPriority = this.setPriority.bind(this);
         this.setTitle = this.setTitle.bind(this);
         this.setType = this.setType.bind(this);
+        this.setAssignee = this.setAssignee.bind(this);
 
     }
 
@@ -48,7 +50,16 @@ class AddTask extends Component {
     };
 
     createNewTask(){
-        this.props.addTask({description: this.state.taskDesc, priority: this.state.taskPriority, id : Math.random()*100+Math.random()*100, listId: this.props.listId});
+
+        this.props.addTask({
+            title: this.state.taskTitle,
+            description: this.state.taskDesc,
+            priority: this.state.taskPriority,
+            type:this.state.taskType,
+            assignee: this.state.taskAssignee ,
+            id : Math.random()*100+Math.random()*100,
+            listId: this.props.listId});
+
         this.toggle();
     };
     componentDidMount() {
@@ -67,14 +78,17 @@ class AddTask extends Component {
     setTitle(event){
         this.setState({taskTitle: event.target.value});
     }
+    setAssignee(value, option){
+        this.setState({taskAssignee: value});
+    }
 
 
     render() {
         return (
             <MDBContainer>
-                <MDBModal cascading isOpen={this.state.modal} toggle={this.toggle} className="addTaskModal">
-                    <MDBModalHeader className="modal-dialog.cascading-modal text-center text-white lightGreen darken-3" titleClass="w-100" tag="h5" toggle={this.toggle}>
-                           New Task
+                <MDBModal cascading isOpen={this.state.modal} className="addTaskModal">
+                    <MDBModalHeader className="modal-dialog.cascading-modal text-center text-white lightGreen darken-3" titleClass="w-100" tag="h5" toggle={this.toggle} >
+                           New task
                     </MDBModalHeader>
 
                     <p className="text-lg-left label">Priority</p>
@@ -122,6 +136,7 @@ class AddTask extends Component {
                                             id = "userInput"
                                             dataSource={avaliableUsers}
                                             placeholder="Assignee"
+                                            onSelect = {this.setAssignee}
                                             filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
                                         />
                                     </div>

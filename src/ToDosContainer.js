@@ -2,6 +2,11 @@ import React, {Component} from 'react';
 import SingleList from "./SingleList";
 import AddAnotherList from "./AddAnotherList";
 import {MDBContainer, MDBRow} from "mdbreact";
+import { Menu, Icon } from 'antd';
+
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
+
 
 class ToDosContainer extends Component {
     constructor(props) {
@@ -72,7 +77,27 @@ class ToDosContainer extends Component {
 
     render() {
         return (
+
             <MDBContainer className="deck">
+                <div class="navigationContainer">
+                    <h4> Some Fancy Board Name</h4>
+                    <Menu
+                        onClick={this.handleClick}
+                        selectedKeys={[this.state.current]}
+                        mode="horizontal"
+                        className="navigation"
+                    >
+                        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="pic-center" />Board</span>}>
+                            <Menu.Item key="setting:3">Create</Menu.Item>
+                            <Menu.Item key="setting:4">Remove</Menu.Item>
+                        </SubMenu>
+                        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />User</span>}>
+                            <Menu.Item key="setting:3">Log In</Menu.Item>
+                            <Menu.Item key="setting:4">Register</Menu.Item>
+                        </SubMenu>
+                    </Menu>
+                </div>
+
                 <MDBRow>
                     {this.showLists()}
                     <AddAnotherList addList={this.addNewList} list={this.state.listsCollection}/>
