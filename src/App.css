@@ -1,10 +1,13 @@
 
 body {
     background-image: url("https://mdbootstrap.com/img/Photos/Horizontal/Nature/full page/img(20).jpg");
-    height: 95%;
     width: 100%;
+    height: fit-content !important;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.toDosContainer{
 }
 
 .deck {
@@ -22,6 +25,7 @@ body {
     height: 48px;
     position: absolute;
     top: 0;
+    left: 0;
 }
 .navigationContainer h4{
    color: #26a69a;
@@ -309,6 +313,11 @@ body {
     color: #26a69a;
     border-bottom: 1px solid;
 }
+
+.registerBtn{
+    position: absolute;
+    right: 20px;
+}
 .modal {
     top: 0;
 }
@@ -381,6 +390,9 @@ body {
 .text-white h5{
     color: white !important;
 }
+.text-align-left{
+    text-align:left !important;
+}
 
 
 .noBackgroundColor {
@@ -399,7 +411,7 @@ body {
 }
 
 .lightGreen {
-    background-color: #2BBBAD;
+    background-color: #2BBBAD !important;
 }
 
 .lightGrey {

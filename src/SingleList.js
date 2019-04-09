@@ -1,6 +1,7 @@
 import React, {useState,useEffect } from 'react';
 import SingleTask from "./SingleTask";
 import AddTask from "./AddTask";
+import {apiHostName} from './StaticResources';
 import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol} from "mdbreact";
 import classNames from "classnames";
 
@@ -11,7 +12,7 @@ function SingleList(props) {
         if(localStorage.getItem(props.item.id)){
             return JSON.parse(localStorage.getItem(props.item.id));
         }
-        return props.tasks == undefined ? [] : props.tasks;
+        return props.tasks === undefined ? [] : props.tasks;
     };
 
     const [style, setStyle] = useState('singleLine animated fadeInRight');
@@ -20,6 +21,7 @@ function SingleList(props) {
     const [showModal, setModal] = useState(false);
     const [item, setItem] = useState({name: props.item.name, id: props.item.id, index: props.index});
     const [isEdit, setEdit] = useState(false);
+    const [task, setTask] = useState(undefined);
 
 
     useEffect(() => {
@@ -41,6 +43,27 @@ function SingleList(props) {
 
     const addTask = (taskObj) => {
         setTaskList([...taskList, taskObj]);
+
+        const createTask = {
+            method: 'POST',
+            body: JSON.stringify(taskObj),
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            }
+        };
+
+        //UNCOMMENT WITH HOST
+       /* fetch(apiHostName+'tasks', createTask)
+            .then((response) => {
+                return response.json();
+            })
+            .then((jsonObject) => {
+                console.log('created task: '+jsonObject.id);
+            })
+            .catch((error) => {
+                console.log(error);
+            });*/
     };
 
     const cloneCurrentList = () => {
@@ -52,8 +75,10 @@ function SingleList(props) {
     };
 
     const toggleModal = () => {
+        setTask(undefined);
         setModal(!showModal);
     };
+
     const toggleEdit = () => {
         setEdit(!isEdit);
     };
@@ -61,10 +86,15 @@ function SingleList(props) {
         setItem({...item, name: event.target.value});
     };
 
+    const editTask = (task) => {
+        setTask(task);
+        setModal(true);
+    }
+
     const openModal = () => {
         if (showModal) {
             document.getElementById(props.item.id).classList.remove('fadeInRight');
-            return (<AddTask toggle={toggleModal} showMOdal={showModal} addTask={addTask} listId={props.item.id}/>);
+            return (<AddTask toggle={toggleModal} showMOdal={showModal} addTask={addTask} listId={props.item.id} taskObj={task} updateTask={updateTask}/>);
         }
     };
 
@@ -77,11 +107,21 @@ function SingleList(props) {
         setTaskList(taskList.filter(item => item.id !== uID));
     };
 
+    const updateTask = (task) => {
+        for(var elem in taskList){
+            if(taskList[elem].id === task.id) {
+                taskList[elem] = task;
+                break;
+            }
+        }
+    }
+
     const showTasks = () => taskList.map((item) => (
             <SingleTask
                 taskObj={item}
                 removeTask={removeTask}
-                key={item.id}
+                key={JSON.stringify(item)}
+                toggleEdit = {editTask}
             />
         )
     );
@@ -92,7 +132,6 @@ function SingleList(props) {
                 <MDBCardTitle>
                     <div className={classNames('lineItemTitle', {'collapse': isEdit})}>
                         {item.name}
-
                     </div>
                     <div className={classNames({'hide': !isEdit})}>
                         <div className="input-field editListName">
@@ -103,17 +142,18 @@ function SingleList(props) {
 
 
                     <div className={classNames('listMenuBtnContainer')}>
-                        <a href="#" title="Remove list" onClick={removeCurrentList}
+                        <a title="Remove list" onClick={removeCurrentList}
                            className={classNames('float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightRed')}>
                             <i className="align-middle material-icons">remove</i>
                         </a>
-                        <a href="#" title="Clone list" onClick={cloneCurrentList}
+                        <a title="Clone list" onClick={cloneCurrentList}
                            className={classNames('float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightPurple')}>
                             <i className="align-middle material-icons">call_split</i>
                         </a>
-                        <a href="#" title={!isEdit ? 'Edit title' : 'Save changes'} onClick={toggleEdit} className={classNames(
+                        <a title={!isEdit ? 'Edit title' : 'Save changes'} onClick={toggleEdit} className={classNames(
                             'float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightBlue',
-                            {'saveEditListName saveBtnColor': isEdit}
+                            {'saveEditListName saveBtnColor': isEdit},
+                            {'hide' : (isEdit && item.name === '') }
                         )}
                         >
                             <i className="align-middle material-icons">{!isEdit ? 'edit' : 'save'}</i>
@@ -126,7 +166,7 @@ function SingleList(props) {
                         {showTasks()}
                     </div>
                     <div
-                        className={classNames({'addNewTaskList': taskList.length > 0}, {'addNewTaskEmpty': taskList.length === 0})}>
+                        className={classNames({'hide' : isEdit},{'addNewTaskList': taskList.length > 0}, {'addNewTaskEmpty': taskList.length === 0})}>
                         <a title="Add new task"
                            className={classNames('btn-floating waves-effect waves-light lightGreen', {'pulse': isHovered})}
                            onClick={toggleModal} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {MDBCard, MDBCardBody, MDBRow,MDBCardTitle} from "mdbreact";
+import {MDBCard, MDBCardBody, MDBRow} from "mdbreact";
 import { Avatar } from 'antd';
 import classNames from "classnames";
 
@@ -36,8 +36,9 @@ function SingleTask(props) {
         setTask({...task,description: event.target.value});
     };
 
-    const toggleEdit = () => {
-        setEdit(!isEdit);
+    const editCurrentTask = () => {
+        /*setEdit(!isEdit);*/
+        props.toggleEdit(task);
     };
 
     useEffect(() => {
@@ -68,7 +69,7 @@ function SingleTask(props) {
                            className={classNames(
                                'show float-right btn-floating editTaskNameBtn waves-effect waves-light listMenuBtn lightBlue btn-smallx',
                                {'saveBtnColor': isEdit})}
-                           onClick={toggleEdit}
+                           onClick={editCurrentTask}
                         >
                             <i className="align-middle material-icons">{isEdit ? 'save' : 'edit'}</i>
                         </a>
