@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import {MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter,MDBRow,MDBCol,MDBBtnGroup } from 'mdbreact';
-import { message, Alert , Button } from 'antd';
+import { message, Alert , Button,Avatar  } from 'antd';
 import classNames from "classnames";
 import 'antd/dist/antd.css';
 import {apiHostName} from "./StaticResources";
@@ -8,7 +8,7 @@ import {apiHostName} from "./StaticResources";
 function CreateUser(props){
 
     const [isOpen,setOpen] = useState(true);
-    const [user, setUser] = useState({name : '', password: '', email: ''});
+    const [user, setUser] = useState({password: '', email: '',login: '',firstName : '',lastName: ''});
     const [isLoading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -18,43 +18,54 @@ function CreateUser(props){
     };
 
     const createUser = () => {
+        if(user.firstName === '') return setErrorMsg('Provide first name');
+        if(user.lastName === '') return setErrorMsg('Provide last name');
+
         var passwordFormat = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
         var emaiLFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(user.name === '') return setErrorMsg('Provide username');
         if(user.password.length < 8) return setErrorMsg('Password must contain at least 8 characters');
         if(!passwordFormat.test(user.password)) return setErrorMsg('Password must contain at least one special character');
         if(user.email === '') return setErrorMsg('Provide email address');
         if(!emaiLFormat.test(user.email)) return setErrorMsg('Please provide valid email address');
 
+        var firstName = user.firstName;
+        var lastName = user.lastName;
         setErrorMsg('');
         setLoading(true);
-
+        var userToCreate = {name: firstName + ' ' + lastName, login: user.login, password: user.password, email: user.email};
+        console.log(userToCreate);
         const createUser = {
             method: 'POST',
-            body: JSON.stringify(user),
+            body: JSON.stringify(userToCreate),
             headers: {
                 'Accept' : 'application/json',
                 'Content-Type' : 'application/json'
             }
         };
         //UNCOMMENT WITH HOST
-     /*   fetch(apiHostName+'users', createUser)
+        fetch(apiHostName+'users', createUser)
             .then((response) => {
-                return response.json();
+                return response;
             })
             .then((jsonObject) => {
                 toggle();
-                message.success('You account has been created. Now you can use provided credentials to log in.');
+                message.success('Your account has been created. Now you can use provided credentials to log in.');
             })
             .catch((error) => {
                 toggle();
                 message.error(error.message === 'Failed to fetch' ? 'Connection cannot be established, please try again later' : error.message);
-            });*/
+            });
 
     }
 
-    const setName = (event) => {
-        setUser({...user,  name: event.target.value});
+    const setLogin = (event) => {
+        setUser({...user, login: event.target.value});
+    }
+    const setFirstName = (event) => {
+        setUser({...user, firstName: event.target.value});
+    }
+    const setLastName = (event) => {
+        setUser({...user, lastName: event.target.value});
     }
     const setPassword = (event) => {
         setUser({...user,  password: event.target.value});
@@ -81,8 +92,22 @@ function CreateUser(props){
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s6">
+                                    <i className="material-icons prefix">done</i>
+                                    <input id="list_name" type="text" className="" value={user.firstName} onChange={setFirstName}/>
+                                    <label htmlFor="list_name">First Name</label>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="input-field col s6">
+                                    <i className="material-icons prefix">done_outline</i>
+                                    <input id="list_name" type="text" className="" value={user.lastName} onChange={setLastName}/>
+                                    <label htmlFor="list_name">Last Name</label>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="input-field col s6">
                                     <i className="material-icons prefix">face</i>
-                                    <input id="list_name" type="text" className="" value={user.name} onChange={setName}/>
+                                    <input id="list_name" type="text" className="" value={user.login} onChange={setLogin}/>
                                     <label htmlFor="list_name">Username</label>
                                 </div>
                             </div>

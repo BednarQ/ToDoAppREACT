@@ -1,15 +1,15 @@
 import React, { useState,useEffect } from 'react';
 import {MDBContainer, MDBBtn, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter,MDBRow,MDBCol,MDBBtnGroup } from 'mdbreact';
-import { message, Alert , Button } from 'antd';
+import { message, Alert , Button } from 'antd/lib/index';
 import classNames from "classnames";
 import 'antd/dist/antd.css';
 import {apiHostName,avaliableUsers} from "./StaticResources";
 
 
-function LogIn(props){
+function NewProject(props){
 
     const [isOpen,setOpen] = useState(true);
-    const [user, setUser] = useState({name : '', password: ''});
+    const [project, setProject] = useState({name : ''});
     const [isLoading, setLoading] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
@@ -19,25 +19,30 @@ function LogIn(props){
     };
 
 
-    const login = () => {
-        if(user.name === '') return setErrorMsg('Provide username');
-        if(user.password === '') return setErrorMsg('Provide password');
+    const create = () => {
+        if(project.name === '') return setErrorMsg('Provide project name');
 
         setErrorMsg('');
         setLoading(true);
-        fetch(apiHostName+'/users')
-            .then(result=>result.json())
-            .then((users) => {
-                for(var i in users){
-                    if(users[i].login === user.name && users[i].password === user.password) {
-                        props.setUser(users[i]);
-                        toggle();
-                        message.success('You have successfully logged in.');
-                        return;
-                    }
-                }
-                setErrorMsg('Incorrect password or username.');
-                setLoading(false);
+        const newProject = {
+            method: 'POST',
+            body: JSON.stringify(project),
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            }
+        };
+        //UNCOMMENT WITH HOST
+        fetch(apiHostName+'projects', newProject)
+            .then((response) => {
+                return response.json();
+            })
+            .then((jsonObject) => {
+                project.id = jsonObject.id;
+                console.log('response '+JSON.stringify(jsonObject));
+                props.addProject(jsonObject);
+                toggle();
+                message.success('Project has been created.');
             })
             .catch((error) => {
                 toggle();
@@ -46,17 +51,18 @@ function LogIn(props){
     };
 
     const setName = (event) => {
-        setUser({...user,  name: event.target.value});
+        setProject({...project,  name: event.target.value});
     };
+    /*
     const setPassword = (event) => {
         setUser({...user,  password: event.target.value});
-    };
+    };*/
 
     return (
         <MDBContainer>
             <MDBModal cascading isOpen={isOpen} className="addUserModal">
                 <MDBModalHeader className="modal-dialog.cascading-modal text-center text-white lightGreen darken-3" titleClass="w-100" tag="h5" toggle={toggle}>
-                    Log In
+                    Create new Project
                 </MDBModalHeader>
                 <MDBModalBody className="text-center">
                     <Alert
@@ -70,21 +76,14 @@ function LogIn(props){
                         <form className="col s12">
                             <div className="row">
                                 <div className="input-field col s6">
-                                    <i className="material-icons prefix">face</i>
-                                    <input id="list_name" type="text" className="" value={user.name} onChange={setName}/>
-                                    <label htmlFor="list_name">Username</label>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="input-field col s6">
-                                    <i className="material-icons prefix">lock</i>
-                                    <input id="icon_prefix2" className="materialize-textarea" value={user.password} onChange={setPassword} type="password"/>
-                                    <label htmlFor="icon_prefix2">Password</label>
+                                    <i className="material-icons prefix">subject</i>
+                                    <input id="list_name" type="text" className="" value={project.name} onChange={setName}/>
+                                    <label htmlFor="list_name">Name</label>
                                 </div>
                             </div>
                             <div className="row registerBtn">
-                                <Button type="primary" loading={isLoading} onClick={login} className="lightGreen">
-                                    {isLoading ? 'Please wait' : 'Log In'}
+                                <Button type="primary" loading={isLoading} className="lightGreen" onClick={create}>
+                                    {isLoading ? 'Please wait' : 'Create project'}
                                 </Button>
                             </div>
                         </form>
@@ -96,4 +95,4 @@ function LogIn(props){
     );
 }
 
-export default LogIn;
+export default NewProject;

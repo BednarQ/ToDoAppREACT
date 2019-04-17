@@ -2,16 +2,21 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8bd53cc3-bf78-4bd8-9c42-c53bbe591105" name="Default Changelist" comment="everything pushed">
-      <change afterPath="$PROJECT_DIR$/src/CreateUser.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/LogIn.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/StaticResources.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Board.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/InitialPopup.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/NewBoard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/NewProject.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Project.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Session.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/AddTask.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/AddTask.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/CreateUser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/CreateUser.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/LogIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/LogIn.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SingleList.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleList.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/SingleTask.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/SingleTask.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/StaticResources.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/StaticResources.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ToDosContainer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/ToDosContainer.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -23,75 +28,13 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="611661610">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="6" />
-          <entry key="project.open.time.1" value="1" />
-          <entry key="project.open.time.2" value="2" />
-          <entry key="project.open.time.3" value="2" />
-          <entry key="project.open.time.31" value="1" />
-          <entry key="project.open.time.4" value="1" />
-          <entry key="project.opened" value="7" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="css" value="8" />
-          <entry key="gitignore" value="2" />
-          <entry key="html" value="8" />
-          <entry key="ico" value="1" />
-          <entry key="js" value="68" />
-          <entry key="json" value="2" />
-          <entry key="svg" value="1" />
-          <entry key="ts" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="CSS" value="8" />
-          <entry key="HTML" value="8" />
-          <entry key="Image" value="1" />
-          <entry key="JSON" value="2" />
-          <entry key="JavaScript" value="68" />
-          <entry key="PLAIN_TEXT" value="2" />
-          <entry key="SVG" value="1" />
-          <entry key="TypeScript" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.js.language.service.starts">
-        <counts>
-          <entry key="ESLintLanguageService" value="6" />
-          <entry key="TypeScriptServerServiceImpl" value="1" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="css" value="4243" />
-          <entry key="gitignore" value="21" />
-          <entry key="html" value="92" />
-          <entry key="js" value="26360" />
-          <entry key="txt" value="102" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="CSS" value="4243" />
-          <entry key="HTML" value="92" />
-          <entry key="JavaScript" value="26360" />
-          <entry key="PLAIN_TEXT" value="123" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/App.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="94">
-              <caret line="373" column="18" lean-forward="true" selection-start-line="373" selection-start-column="18" selection-end-line="373" selection-end-column="18" />
+            <state relative-caret-position="272">
+              <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -99,8 +42,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/SingleList.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="486">
-              <caret line="170" column="46" lean-forward="true" selection-start-line="170" selection-start-column="46" selection-end-line="170" selection-end-column="46" />
+            <state relative-caret-position="272">
+              <caret line="97" column="39" lean-forward="true" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
               <folding>
                 <element signature="e#0#49#0" expanded="true" />
               </folding>
@@ -111,50 +54,41 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="102">
-              <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+            <state relative-caret-position="425">
+              <caret line="25" selection-start-line="25" selection-end-line="25" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/SingleTask.js">
+        <entry file="file://$PROJECT_DIR$/src/Board.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="332">
-              <caret line="20" column="16" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="16" />
+            <state relative-caret-position="308">
+              <caret line="141" column="20" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="20" />
               <folding>
-                <element signature="e#0#49#0" expanded="true" />
+                <element signature="e#0#50#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/AddTask.js">
+        <entry file="file://$PROJECT_DIR$/src/ToDosContainer.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="104" column="6" lean-forward="true" selection-start-line="104" selection-start-column="6" selection-end-line="104" selection-end-column="6" />
+            <state relative-caret-position="87">
+              <caret line="28" column="61" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
               <folding>
-                <element signature="e#0#41#0" expanded="true" />
+                <element signature="e#0#50#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/auto-complete/index.d.ts">
+        <entry file="file://$PROJECT_DIR$/src/InitialPopup.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="235">
-              <caret line="27" column="21" selection-start-line="27" selection-start-column="21" selection-end-line="27" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/CreateUser.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-261">
-              <caret line="51" column="17" selection-start-line="40" selection-start-column="5" selection-end-line="51" selection-end-column="17" />
+            <state relative-caret-position="322">
+              <caret line="45" column="72" selection-start-line="45" selection-start-column="72" selection-end-line="45" selection-end-column="72" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
               </folding>
@@ -165,8 +99,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/LogIn.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="348">
-              <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
+            <state relative-caret-position="424">
+              <caret line="88" column="34" lean-forward="true" selection-start-line="84" selection-start-column="27" selection-end-line="88" selection-end-column="34" />
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
               </folding>
@@ -185,36 +119,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>task</find>
-      <find>singleTaskMenuButtonsContainer</find>
-      <find>out</find>
-      <find>hideElement</find>
-      <find>deck</find>
-      <find>hover</find>
-      <find>top:20</find>
-      <find>text-white</find>
-      <find>priority</find>
-      <find>prio</find>
-      <find>taskti</find>
-      <find>class=</find>
-      <find>#</find>
-      <find>app</find>
-      <find>text-ali</find>
-      <find>this.state.show</find>
-      <find>right:</find>
-      <find>classnames</find>
-      <find>fe</find>
-      <find>classNames</find>
       <find>modal</find>
       <find>feach</find>
       <find>featch</find>
       <find>lightGreen</find>
       <find>fetc</find>
       <find>fetch</find>
-      <find>edit</find>
       <find>add</find>
       <find>consoe</find>
       <find>save</find>
+      <find>avaliableUsers</find>
+      <find>addTask</find>
+      <find>local</find>
+      <find>this.</find>
+      <find>map</find>
+      <find>some t</find>
+      <find>state</find>
+      <find>this.st</find>
+      <find>dele</find>
+      <find>user</find>
+      <find>.id</find>
+      <find>addT</find>
+      <find>large</find>
+      <find>filter</find>
+      <find>asi</find>
+      <find>showTask</find>
+      <find>remove</find>
+      <find>edit</find>
+      <find>clone</find>
+      <find>row</find>
+      <find>log ou</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -230,40 +164,31 @@
         <option value="$PROJECT_DIR$/src/orbit-1.css" />
         <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/src/assets/StaticResources.js" />
-        <option value="$PROJECT_DIR$/src/StaticResources.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/App.css" />
-        <option value="$PROJECT_DIR$/src/CreateUser.js" />
+        <option value="$PROJECT_DIR$/src/Session.js" />
+        <option value="$PROJECT_DIR$/src/StaticResources.js" />
         <option value="$PROJECT_DIR$/src/LogIn.js" />
-        <option value="$PROJECT_DIR$/src/ToDosContainer.js" />
-        <option value="$PROJECT_DIR$/src/SingleTask.js" />
+        <option value="$PROJECT_DIR$/src/assets/NewBoard.js" />
+        <option value="$PROJECT_DIR$/src/NewProject.js" />
+        <option value="$PROJECT_DIR$/src/NewBoard.js" />
+        <option value="$PROJECT_DIR$/src/Project.js" />
         <option value="$PROJECT_DIR$/src/AddTask.js" />
+        <option value="$PROJECT_DIR$/src/SingleTask.js" />
         <option value="$PROJECT_DIR$/src/SingleList.js" />
+        <option value="$PROJECT_DIR$/src/Board.js" />
+        <option value="$PROJECT_DIR$/src/CreateUser.js" />
+        <option value="$PROJECT_DIR$/src/App.css" />
+        <option value="$PROJECT_DIR$/src/InitialPopup.js" />
+        <option value="$PROJECT_DIR$/src/ToDosContainer.js" />
         <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
-    <package-json value="$PROJECT_DIR$/package.json" />
-  </component>
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="NodeModulesDirectoryManager">
-    <handled-path value="$PROJECT_DIR$/node_modules" />
-  </component>
-  <component name="NodePackageJsonFileManager">
-    <packageJsonPaths>
-      <path value="$PROJECT_DIR$/package.json" />
-    </packageJsonPaths>
-  </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1928" />
-    <option name="y" value="-97" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="x" value="-8" />
+    <option name="y" value="-5" />
+    <option name="width" value="1616" />
+    <option name="height" value="876" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -285,6 +210,12 @@
               <item name="resume_react" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="to_do_list_react" type="b2602c69:ProjectViewProjectNode" />
+              <item name="resume_react" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="assets" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -293,11 +224,12 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../ob" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
-    <property name="node.js.selected.package.eslint" value="C:\Users\mbednarek005\WebstormProjects\resume_react\node_modules\eslint" />
+    <property name="node.js.selected.package.eslint" value="$PROJECT_DIR$/node_modules/eslint" />
     <property name="nodejs_interpreter_path" value="node" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -306,13 +238,13 @@
     <property name="ts.external.directory.path" value="C:\Program Files\JetBrains\WebStorm 2018.2.3\plugins\JavaScriptLanguage\jsLanguageServicesImpl\external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\mbednarek005\WebstormProjects\resume_react\src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\mbednarek005\WebstormProjects\resume_react\src" />
       <recent name="C:\Users\mbednarek005\WebstormProjects\resume_react\src\assets" />
       <recent name="C:\Users\mbednarek005\WebstormProjects\resume_react\public" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\mbednarek005\WebstormProjects\resume_react\src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -343,7 +275,12 @@
       <workItem from="1553336036487" duration="18895000" />
       <workItem from="1553498157367" duration="600000" />
       <workItem from="1554638082088" duration="7075000" />
-      <workItem from="1554799007374" duration="11513000" />
+      <workItem from="1554799007374" duration="12380000" />
+      <workItem from="1554900597408" duration="7037000" />
+      <workItem from="1555250373376" duration="8005000" />
+      <workItem from="1555329207289" duration="4171000" />
+      <workItem from="1555340468382" duration="3781000" />
+      <workItem from="1555402239995" duration="22855000" />
     </task>
     <task id="LOCAL-00001" summary="Initial commit">
       <created>1553002177381</created>
@@ -384,17 +321,16 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="145957000" />
+    <option name="totallyTimeSpent" value="192673000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-97" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.20021075" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24081115" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.329718" />
@@ -406,10 +342,11 @@
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="SOQL Query" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50316125" side_tool="true" weight="0.2733189" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49683878" visible="true" weight="0.27548808" />
+      <window_info anchor="bottom" id="Terminal" order="11" sideWeight="0.49683878" visible="true" weight="0.34185734" />
       <window_info anchor="bottom" id="Version Control" order="12" sideWeight="0.49947312" weight="0.329718" />
       <window_info anchor="bottom" id="Anonymous Apex" order="13" />
       <window_info anchor="bottom" id="Messages" order="14" sideWeight="0.49894625" visible="true" weight="0.329718" />
+      <window_info anchor="bottom" id="TypeScript" order="15" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -441,9 +378,6 @@
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
@@ -478,13 +412,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="207">
           <caret line="283" column="26" selection-start-line="283" selection-start-column="26" selection-end-line="283" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AddAnotherList.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="45" column="431" selection-start-line="45" selection-start-column="431" selection-end-line="45" selection-end-column="431" />
         </state>
       </provider>
     </entry>
@@ -524,13 +451,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/StaticResources.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="45" selection-start-line="2" selection-start-column="42" selection-end-line="2" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/react-dom/cjs/react-dom.development.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="227">
@@ -548,45 +468,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/App.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="373" column="18" lean-forward="true" selection-start-line="373" selection-start-column="18" selection-end-line="373" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/LogIn.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="348">
-          <caret line="24" column="24" lean-forward="true" selection-start-line="24" selection-start-column="24" selection-end-line="24" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/CreateUser.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-261">
-          <caret line="51" column="17" selection-start-line="40" selection-start-column="5" selection-end-line="51" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#50#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ToDosContainer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="349">
-          <caret line="137" column="22" lean-forward="true" selection-start-line="137" selection-start-column="22" selection-end-line="137" selection-end-column="22" />
-          <folding>
-            <element signature="e#0#39#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node_modules/antd/lib/auto-complete/index.d.ts">
       <provider selected="true" editor-type-id="text-editor">
@@ -595,40 +478,144 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingleTask.js">
+    <entry file="file://$PROJECT_DIR$/src/Session.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/AddAnotherList.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="332">
-          <caret line="20" column="16" selection-start-line="20" selection-start-column="12" selection-end-line="20" selection-end-column="16" />
+        <state relative-caret-position="731">
+          <caret line="45" column="431" selection-start-line="45" selection-start-column="431" selection-end-line="45" selection-end-column="431" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/StaticResources.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="2" lean-forward="true" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NewProject.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="158">
+          <caret line="35" column="39" lean-forward="true" selection-end-line="97" selection-end-column="26" />
           <folding>
-            <element signature="e#0#49#0" expanded="true" />
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/NewBoard.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Project.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="15" column="32" lean-forward="true" selection-start-line="15" selection-start-column="32" selection-end-line="15" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AddTask.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="104" column="6" lean-forward="true" selection-start-line="104" selection-start-column="6" selection-end-line="104" selection-end-column="6" />
+        <state relative-caret-position="-267">
+          <caret line="44" column="45" lean-forward="true" selection-start-line="44" selection-start-column="45" selection-end-line="44" selection-end-column="45" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/SingleList.js">
+    <entry file="file://$PROJECT_DIR$/src/SingleTask.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="486">
-          <caret line="170" column="46" lean-forward="true" selection-start-line="170" selection-start-column="46" selection-end-line="170" selection-end-column="46" />
+        <state relative-caret-position="1173">
+          <caret line="88" column="26" selection-start-line="88" selection-start-column="26" selection-end-line="88" selection-end-column="26" />
           <folding>
             <element signature="e#0#49#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/Board.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="141" column="20" selection-start-line="141" selection-start-column="20" selection-end-line="141" selection-end-column="20" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CreateUser.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="326">
+          <caret line="101" column="85" selection-start-line="101" selection-start-column="85" selection-end-line="101" selection-end-column="85" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/LogIn.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="424">
+          <caret line="88" column="34" lean-forward="true" selection-start-line="84" selection-start-column="27" selection-end-line="88" selection-end-column="34" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/SingleList.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="97" column="39" lean-forward="true" selection-start-line="97" selection-start-column="39" selection-end-line="97" selection-end-column="39" />
+          <folding>
+            <element signature="e#0#49#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="44" column="18" selection-start-line="44" selection-start-column="18" selection-end-line="44" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/InitialPopup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="45" column="72" selection-start-line="45" selection-start-column="72" selection-end-line="45" selection-end-column="72" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ToDosContainer.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="87">
+          <caret line="28" column="61" selection-start-line="28" selection-start-column="61" selection-end-line="28" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="6" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        <state relative-caret-position="425">
+          <caret line="25" selection-start-line="25" selection-end-line="25" />
         </state>
       </provider>
     </entry>

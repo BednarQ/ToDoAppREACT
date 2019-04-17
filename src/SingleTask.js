@@ -16,10 +16,11 @@ function SingleTask(props) {
             description: props.taskObj.description,
             listId: props.taskObj.listId,
             id: props.taskObj.id,
-            assignee: props.taskObj.assignee,
+            asignee: props.taskObj.asignee,
+            owner: props.taskObj.owner,
             priority : props.taskObj.priority,
             type: props.taskObj.type,
-            initials: props.taskObj.assignee.split(" ")[0].charAt(0) + props.taskObj.assignee.split(" ")[1].charAt(0)
+            initials:/* props.taskObj.asignee.name.split(" ")[0].charAt(0) + props.taskObj.asignee.name.split(" ")[1].charAt(0)*/ 'kurwa'
         });
 
     const toggleMenu = () => {
@@ -37,22 +38,9 @@ function SingleTask(props) {
     };
 
     const editCurrentTask = () => {
-        /*setEdit(!isEdit);*/
+        console.log(task);
         props.toggleEdit(task);
     };
-
-    useEffect(() => {
-        if(localStorage.getItem(task.listId)){
-            var allTasks = JSON.parse(localStorage.getItem(task.listId));
-            for(var i=0; i<allTasks.length; i++){
-                if(allTasks[i].id === task.id){
-                    allTasks[i].description = task.description;
-                }
-            }
-            localStorage.setItem(task.listId, JSON.stringify(allTasks));
-        }
-    },[task]);
-
 
     return (
         <MDBRow>
@@ -99,8 +87,6 @@ function SingleTask(props) {
                             </a>
                         </div>
                     </div>
-
-
                     <div className={classNames('taskDescription', {'collapse': isEdit})}>
                         <p className="taskTitle">
                             {task.title}

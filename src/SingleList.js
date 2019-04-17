@@ -1,48 +1,42 @@
 import React, {useState,useEffect } from 'react';
 import SingleTask from "./SingleTask";
 import AddTask from "./AddTask";
-import {apiHostName} from './StaticResources';
+import {apiHostName} from "./StaticResources";
 import {MDBCard, MDBCardBody, MDBCardTitle, MDBCol} from "mdbreact";
+import {message,Spin} from "antd";
 import classNames from "classnames";
 
 
 function SingleList(props) {
 
-    const initialState = () => {
-        if(localStorage.getItem(props.item.id)){
-            return JSON.parse(localStorage.getItem(props.item.id));
-        }
-        return props.tasks === undefined ? [] : props.tasks;
-    };
-
     const [style, setStyle] = useState('singleLine animated fadeInRight');
-    const [taskList, setTaskList] = useState(initialState);
+    const [taskList, setTaskList] = useState([]);
     const [isHovered, setHovered] = useState(false);
     const [showModal, setModal] = useState(false);
-    const [item, setItem] = useState({name: props.item.name, id: props.item.id, index: props.index});
+    const [item, setItem] = useState(props.item);
     const [isEdit, setEdit] = useState(false);
     const [task, setTask] = useState(undefined);
+    const [loggedUser, setLoggedUser] = useState(props.user);
+    const [loading, setLoading] = useState(false);
 
 
     useEffect(() => {
-        localStorage.setItem(item.id, JSON.stringify(taskList));
-    },[taskList]);
+        setLoggedUser(props.user);
+    },[props.user]);
 
     useEffect(() => {
-        if(localStorage.getItem('allLists')){
-            var allLists = JSON.parse(localStorage.getItem('allLists'));
-            for(var i=0; i<allLists.length; i++){
-                if(allLists[i].id === item.id){
-                    allLists[i].name = item.name;
+        fetch(apiHostName+'tasks')
+            .then(result=>result.json())
+            .then((items) =>{
+                    if(items.length > 0) setTaskList(items.filter((elem) => (elem.listId === item.id && elem.asignee.id === loggedUser.id)));
                 }
-            }
-            localStorage.setItem('allLists', JSON.stringify(allLists));
-        }
-    },[item]);
+            ).catch(error => message.error(error))
+    },[taskList]);
 
 
     const addTask = (taskObj) => {
-        setTaskList([...taskList, taskObj]);
+        taskObj.ownerId = loggedUser.id;
+        console.log(taskObj);
 
         const createTask = {
             method: 'POST',
@@ -54,20 +48,24 @@ function SingleList(props) {
         };
 
         //UNCOMMENT WITH HOST
-       /* fetch(apiHostName+'tasks', createTask)
+        fetch(apiHostName+'tasks', createTask)
             .then((response) => {
                 return response.json();
             })
             .then((jsonObject) => {
-                console.log('created task: '+jsonObject.id);
+                setTaskList([...taskList, jsonObject]);
             })
             .catch((error) => {
-                console.log(error);
-            });*/
+                console.log('Error ocurred on task creation: '+error);
+            });
+
     };
 
     const cloneCurrentList = () => {
-        props.clone(item, JSON.stringify(taskList));
+        setLoading(true);
+        if(props.clone(item, JSON.stringify(taskList))){
+            setLoading(false);
+        };
     }
 
     const toggleHover = () => {
@@ -80,9 +78,38 @@ function SingleList(props) {
     };
 
     const toggleEdit = () => {
-        setEdit(!isEdit);
+        if(isEdit){
+            setLoading(true);
+            console.log(JSON.stringify(item));
+            const updateColumn = {
+                method: 'POST',
+                body: JSON.stringify(item),
+                headers: {
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json'
+                }
+            };
+
+            //UNCOMMENT WITH HOST
+            fetch(apiHostName+'columns/'+item.id, updateColumn)
+                .then((response) => {
+                    return response.json();
+                })
+                .then((jsonObject) => {
+                    setLoading(false);
+                    setEdit(false);
+                })
+                .catch((error) => {
+                    message.error('Error occured on column update: '+error);
+                });
+        }else{
+            setEdit(true);
+        }
+
+
     };
     const setName = (event) => {
+
         setItem({...item, name: event.target.value});
     };
 
@@ -94,17 +121,38 @@ function SingleList(props) {
     const openModal = () => {
         if (showModal) {
             document.getElementById(props.item.id).classList.remove('fadeInRight');
-            return (<AddTask toggle={toggleModal} showMOdal={showModal} addTask={addTask} listId={props.item.id} taskObj={task} updateTask={updateTask}/>);
+            return (<AddTask toggle={toggleModal} showMOdal={showModal} addTask={addTask} listId={item.id} taskObj={task} updateTask={updateTask}/>);
         }
     };
 
     const removeCurrentList = () => {
+        setLoading(true);
         setStyle('singleLine animated fadeOutLeft');
         props.removeList(props.item.id);
     };
 
     const removeTask = (uID) => {
-        setTaskList(taskList.filter(item => item.id !== uID));
+        const spec = {
+            method: 'DELETE',
+            body: '',
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
+            }
+        };
+        //UNCOMMENT WITH HOST
+        fetch(apiHostName+'tasks/'+uID, spec)
+            .then((response) => {
+                return response;
+            })
+            .then((jsonObject) => {
+                setTaskList(taskList.filter(item => item.id !== uID));
+                message.success('Task has been successfully deleted.');
+            })
+            .catch((error) => {
+                message.error(error);
+            });
+
     };
 
     const updateTask = (task) => {
@@ -116,67 +164,85 @@ function SingleList(props) {
         }
     }
 
-    const showTasks = () => taskList.map((item) => (
-            <SingleTask
-                taskObj={item}
-                removeTask={removeTask}
-                key={JSON.stringify(item)}
-                toggleEdit = {editTask}
-            />
-        )
-    );
+    const showTasks = () => {
+        if(loggedUser.id !== undefined){
+            taskList.map((item) => {
+                if(item.asignee.id === loggedUser.id) {
+                    return <SingleTask
+                        taskObj={item}
+                        removeTask={removeTask}
+                        key={JSON.stringify(item)}
+                        toggleEdit={editTask}
+                    />
+                }
+
+            });
+        }
+    }
+
 
     return (
-        <MDBCol id={props.item.id} className={style} style={{left: props.index * 350 + 'px'}} >
-            <MDBCard>
-                <MDBCardTitle>
-                    <div className={classNames('lineItemTitle', {'collapse': isEdit})}>
-                        {item.name}
-                    </div>
-                    <div className={classNames({'hide': !isEdit})}>
-                        <div className="input-field editListName">
-                            <input id="list_name" type="text" className="" value={item.name} onChange={setName}/>
-                            <label htmlFor="list_name" className="active">List name</label>
+
+            <MDBCol id={props.item.id} className={style} style={{left: props.index * 350 + 'px'}} >
+                <Spin tip="Doing some magic..." size="large" spinning={loading}>
+                <MDBCard>
+                    <MDBCardTitle>
+                        <div className={classNames('lineItemTitle', {'collapse': isEdit})}>
+                            {item.name}
                         </div>
-                    </div>
+                        <div className={classNames({'hide': !isEdit})}>
+                            <div className="input-field editListName">
+                                <input id="list_name" type="text" className="" value={item.name} onChange={setName}/>
+                                <label htmlFor="list_name" className="active">List name</label>
+                            </div>
+                        </div>
 
 
-                    <div className={classNames('listMenuBtnContainer')}>
-                        <a title="Remove list" onClick={removeCurrentList}
-                           className={classNames('float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightRed')}>
-                            <i className="align-middle material-icons">remove</i>
-                        </a>
-                        <a title="Clone list" onClick={cloneCurrentList}
-                           className={classNames('float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightPurple')}>
-                            <i className="align-middle material-icons">call_split</i>
-                        </a>
-                        <a title={!isEdit ? 'Edit title' : 'Save changes'} onClick={toggleEdit} className={classNames(
-                            'float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightBlue',
-                            {'saveEditListName saveBtnColor': isEdit},
-                            {'hide' : (isEdit && item.name === '') }
-                        )}
-                        >
-                            <i className="align-middle material-icons">{!isEdit ? 'edit' : 'save'}</i>
-                        </a>
-                    </div>
+                        <div className={classNames({'hide' : loading}, 'listMenuBtnContainer')}>
+                            <a title="Remove list" onClick={removeCurrentList}
+                               className={classNames('float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightRed')}>
+                                <i className="align-middle material-icons">remove</i>
+                            </a>
+                            <a title="Clone list" onClick={cloneCurrentList}
+                               className={classNames('float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightPurple')}>
+                                <i className="align-middle material-icons">call_split</i>
+                            </a>
+                            <a title={!isEdit ? 'Edit title' : 'Save changes'} onClick={toggleEdit} className={classNames(
+                                'float-right btn-floating btn-small waves-effect waves-light listMenuBtn lightBlue',
+                                {'saveEditListName saveBtnColor': isEdit},
+                                {'hide' : (isEdit && item.name === '') }
+                            )}
+                            >
+                                <i className="align-middle material-icons">{!isEdit ? 'edit' : 'save'}</i>
+                            </a>
+                        </div>
 
-                </MDBCardTitle>
-                <MDBCardBody className="">
-                    <div className="tasksContainer">
-                        {showTasks()}
-                    </div>
-                    <div
-                        className={classNames({'hide' : isEdit},{'addNewTaskList': taskList.length > 0}, {'addNewTaskEmpty': taskList.length === 0})}>
-                        <a title="Add new task"
-                           className={classNames('btn-floating waves-effect waves-light lightGreen', {'pulse': isHovered})}
-                           onClick={toggleModal} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
-                            <i className="align-middle material-icons">add</i>
-                        </a>
-                    </div>
-                </MDBCardBody>
-            </MDBCard>
-            {openModal()}
-        </MDBCol>
+                    </MDBCardTitle>
+                    <MDBCardBody className="">
+                        <div className="tasksContainer">
+                            {taskList.map((item) => {
+                                return <SingleTask
+                                    taskObj={item}
+                                    removeTask={removeTask}
+                                    key={JSON.stringify(item)}
+                                    toggleEdit={editTask}
+                                />
+                            })}
+                        </div>
+                        <div
+                            className={classNames({'hide' : isEdit},{'addNewTaskList': taskList.length > 0}, {'addNewTaskEmpty': taskList.length === 0})}>
+                            <a title="Add new task"
+                               className={classNames('btn-floating waves-effect waves-light lightGreen', {'pulse': isHovered})}
+                               onClick={toggleModal} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
+                                <i className="align-middle material-icons">add</i>
+                            </a>
+                        </div>
+                    </MDBCardBody>
+                </MDBCard>
+                {openModal()}
+                </Spin>
+            </MDBCol>
+
 
 
     );

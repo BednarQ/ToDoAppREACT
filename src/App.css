@@ -41,6 +41,10 @@ body {
     flex-wrap: nowrap;
 }
 
+.paddingBtns{
+    padding: 20px;
+}
+
 .row .col.singleLine {
     padding-top: 20px;
 }
@@ -231,7 +235,7 @@ body {
 
 .editTaskNameBtn {
     line-height: 30px;
-    margin-top: -15px;
+    margin-top: -17px;
     font-size: 1rem !important;
 }
 
@@ -397,6 +401,9 @@ body {
 
 .noBackgroundColor {
     background-color: transparent !important;
+}
+.inlineButtons {
+    display:inline-flex;
 }
 .btn-floating.lightRed:hover {
     background-color: #f18c99;

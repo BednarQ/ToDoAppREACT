@@ -1,153 +1,225 @@
-import React, {Component} from 'react';
-import SingleList from "./SingleList";
-import AddAnotherList from "./AddAnotherList";
+import React, { useState,useEffect } from 'react';
 import {MDBContainer, MDBRow} from "mdbreact";
-import { Menu, Icon } from 'antd';
+import {Menu, Icon, message,Alert} from 'antd';
 import CreateUser from "./CreateUser";
 import LogIn from "./LogIn";
+import NewBoard from "./NewBoard";
+import Project from "./Project";
 import classNames from "classnames";
+import {apiHostName} from "./StaticResources";
+import NewProject from "./NewProject";
+import InitialPopup from "./InitialPopup"
 
 const SubMenu = Menu.SubMenu;
 
 
-class ToDosContainer extends Component {
-    constructor(props) {
-        super(props);
+function ToDosContainer(props) {
+    const [columns, setColumns] = useState([]);
 
-        this.state = {
-            board : {name : 'Some test name'},
-            listsCollection: [],
-            showRegister : false,
-            showLogin : false,
-            user : {name:'Mateusz Bednarek'}
-        };
+    const [projects, setProjects] = useState([]);
+    const [currentProject, setCurrentProject] = useState({});
+
+    const [boards, setBoards] = useState([]);
+    const [currentBoard, setCurrentBoard] = useState({});
+
+    const [user, setUser] = useState({});
+
+    const [showRegister, isRegister] = useState(false);
+    const [showLogin, isLogin] = useState(false);
+    const [showInitialPopup, isInitialPopup] = useState(false);
+    const [showBoard, isBoard] = useState(false);
+    const [showProject, isProject] = useState(false);
 
 
-        this.addNewList = this.addNewList.bind(this);
-        this.removeList = this.removeList.bind(this);
-        this.showLists = this.showLists.bind(this);
-        this.cloneList = this.cloneList.bind(this);
-        this.openRegister = this.openRegister.bind(this);
-        this.openLogin = this.openLogin.bind(this);
-        this.toggleRegister = this.toggleRegister.bind(this);
-        this.toggleLogin = this.toggleLogin.bind(this);
-        this.setUser = this.setUser.bind(this);
-    }
+    useEffect(() => {
+        fetch(apiHostName+'projects')
+            .then(result=>result.json())
+            .then((items) =>{
+                    setProjects(items);
+            }
+            ).catch(error => message.error(error))
+    },[]);
 
-    componentDidMount(){
-        const savedLists = localStorage.getItem('allLists');
-        if(savedLists){
-            this.setState({listsCollection : JSON.parse(savedLists)});
+    useEffect(() => {
+        fetch(apiHostName+'boards')
+            .then(result=>result.json())
+            .then((items) =>{
+                    setBoards(items);
+                }
+            ).catch(error => message.error(error))
+    },[]);
+
+    useEffect( () => {
+        if(user.id === undefined){
+            toggleInitialPopup(true);
+        }
+    },[user]);
+
+
+    const addProject = (newProject) => {
+        setProjects([...projects, newProject]);
+    };
+    const addBoard = (newBoard) => {
+        setBoards([...boards, newBoard]);
+    };
+
+    const toggleRegister = () =>{
+        isRegister(!showRegister)
+    };
+
+    const toggleLogin = () =>{
+        isLogin(!showLogin)
+    };
+    const toggleBoard = () =>{
+        isBoard(!showBoard)
+    };
+    const toggleProject = () =>{
+        isProject(!showProject)
+    };
+    const toggleInitialPopup = () =>{
+        isInitialPopup(!showInitialPopup)
+    };
+    const openInitialPopup = () =>{
+        if (showInitialPopup) {
+            return (<InitialPopup toggle={toggleInitialPopup} showModal={showInitialPopup} toggleRegister={toggleRegister} toggleLogin={toggleLogin}/>);
         }
     };
 
-    componentDidUpdate(){
-        localStorage.setItem('allLists', JSON.stringify(this.state.listsCollection));
-    };
-
-    addNewList(name) {
-        var list = this.state.listsCollection;
-        list = [...list, ({name: name, id: Math.random() * 100 + Math.random() * 100, tasksList : []})];
-        this.setState({listsCollection: list});
-
-    };
-
-    removeList(uID) {
-        this.setState({
-            listsCollection: this.state.listsCollection.filter(el => el.id !== uID)
-        });
-
-    };
-
-    cloneList(passedList, relatedTasks){
-        var currentList = this.state.listsCollection;
-
-        var newList = {name: passedList.name+'_copy', id: Math.random() * 100 + Math.random() * 100};
-
-        var passedTaskList = JSON.parse(relatedTasks);
-
-        passedTaskList.map(function (item, index) {
-            item.listId = newList.id;
-            item.id =  Math.random()*100+Math.random()*100
-        });
-
-        newList.taskList = passedTaskList;
-
-        currentList.splice(passedList.index + 1, 0 , newList);
-        this.setState({listsCollection : currentList});
-    }
-
-    showLists() {
-        let scope = this;
-        return (
-            this.state.listsCollection.map(function (item, index) {
-                return <SingleList item={item} key={item.id} removeList={scope.removeList} clone={scope.cloneList} tasks={item.taskList} index={index}/>
-            })
-        );
-    };
-
-    toggleRegister(){
-        this.setState({
-            showRegister: !this.state.showRegister
-        });
-    };
-
-    toggleLogin(){
-        this.setState({
-            showLogin: !this.state.showLogin
-        });
-    };
-
-    openRegister(){
-        if (this.state.showRegister) {
-            return (<CreateUser toggle={this.toggleRegister} showModal={this.state.showRegister}/>);
+    const openRegister = () =>{
+        if (showRegister) {
+            return (<CreateUser toggle={toggleRegister} showModal={showRegister}/>);
         }
-    }
-    openLogin(){
-        if (this.state.showLogin) {
-            return (<LogIn toggle={this.toggleLogin} showModal={this.state.showLogin}/>);
+    };
+    const openLogin = () =>{
+        if (showLogin) {
+            return (<LogIn toggle={toggleLogin} showModal={showLogin} setUser={setActiveUser}/>);
         }
-    }
+    };
+    const openBoard = () =>{
+        if (showBoard) {
+            return (<NewBoard   toggle={toggleBoard} showModal={showBoard} user={user} currentProject={currentProject} addBoard = {addBoard}/>);
+        }
+    };
+    const openProject = () =>{
+        if (showProject) {
+            return (<NewProject toggle={toggleProject} showModal={showProject} setUser={setActiveUser} addProject = {addProject}/>);
+        }
+    };
 
-    setUser(user){
-        this.setState({user : this.state.user.name !== '' ? {name : ''} : user});
-    }
 
-    render() {
+    const setActiveUser = (user) =>{
+        setUser(user);
+    };
+    const logOut = () =>{
+        setUser({});
+        setCurrentBoard({});
+        setCurrentProject({});
+    }
+    const handleMenuAction = (item) =>{
+
+        if(item.key.includes('project_')){
+            for(var i in projects){
+                if(projects[i].id == item.key.split('_')[1]){
+                    setCurrentProject(projects[i]);
+                }
+            }
+        }else if(item.key.includes('board_')){
+            for(var i in boards){
+                if(boards[i].id == item.key.split('_')[1]){
+                    setCurrentBoard(boards[i]);
+                }
+            }
+        }else if(item.key === 'deleteCurrentProject'){
+            const spec = {
+                method: 'DELETE',
+                body: '',
+                headers: {
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json'
+                }
+            };
+            //UNCOMMENT WITH HOST
+            fetch(apiHostName+'projects/'+currentProject.id, spec)
+                .then((response) => {
+                    return response;
+                })
+                .then((jsonObject) => {
+                    setProjects(projects.filter(item => item.id !== currentProject.id));
+                    setCurrentProject({});
+                    message.success('Project has been successfully deleted.');
+                })
+                .catch((error) => {
+                    message.error(error);
+                });
+        }
+    };
+
+
         return (
 
             <MDBContainer className="deck">
                 <div className="navigationContainer">
-                    <h4>{this.state.board.name}</h4>
+                    <h4>{currentProject.name} - {currentBoard.name}</h4>
                     <Menu
-                        onClick={this.handleClick}
-                        selectedKeys={[this.state.current]}
                         mode="horizontal"
                         className="navigation"
+                        defaultSelectedKeys={["project_"+currentProject.id]}
+                        onClick={handleMenuAction}
                     >
-                        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="pic-center" />Board</span>}>
-                            <Menu.Item key="setting:3">Create</Menu.Item>
-                            <Menu.Item key="setting:4">Remove</Menu.Item>
+                        <SubMenu className={classNames({'hide' : user.id === undefined})} title={<span className="submenu-title-wrapper" ><Icon type="form" />Project</span>}>
+                            <Menu.ItemGroup key="projects" title="Existing projects" className={classNames({'hide' : projects.length === 0})}>
+                            {
+                               projects.map(function(item, i){
+                                return <Menu.Item
+                                        key={"project_"+item.id}
+                                        >
+                                    {item.name}
+                                    </Menu.Item>
+                                })
+                            }
+                            </Menu.ItemGroup>
+                            <Menu.Item key="createProject" onClick={toggleProject}>Create new project</Menu.Item>
+                            <Menu.Item key="deleteCurrentProject" className={classNames({'hide' : currentProject.id === undefined})}>Delete current project</Menu.Item>
+
                         </SubMenu>
-                        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{this.state.user.name === ''? 'User' : this.state.user.name}</span>}>
-                            <Menu.Item key="setting:5" onClick={this.toggleLogin} className={classNames({'hide' : this.state.user.name !== ''})}>Log In</Menu.Item>
-                            <Menu.Item key="setting:6" onClick={this.setUser} className={classNames({'hide' : this.state.user.name === ''})}>Log Out</Menu.Item>
-                            <Menu.Item key="setting:7" onClick={this.toggleRegister} className={classNames({'hide' : this.state.user.name !== ''})}>Register</Menu.Item>
+                        <SubMenu className={classNames({'hide' : (user.id === undefined || currentProject.id === undefined)})} title={<span className="submenu-title-wrapper"><Icon type="pic-center" />Board</span>}>
+                            <Menu.ItemGroup key="projects" title="Existing projects" className={classNames({'hide' : boards.length === 0})}>
+                                {
+                                    boards.map(function(item, i){
+                                        return <Menu.Item
+                                            key={"board_"+item.id}
+                                        >
+                                            {item.name}
+                                        </Menu.Item>
+                                    })
+                                }
+                            </Menu.ItemGroup>
+                            <Menu.Item key="createBoard" onClick={toggleBoard} >Create new board</Menu.Item>
+                            <Menu.Item key="deleteboard">Delete current board</Menu.Item>
+                        </SubMenu>
+                        <SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{user.id === undefined? 'User' :user.name}</span>}>
+                            <Menu.Item key="setting:5" onClick={toggleLogin} className={classNames({'hide' :user.id !== undefined})}>Log In</Menu.Item>
+                            <Menu.Item key="setting:6" className={classNames({'hide' :user.id === undefined})} onClick={logOut}>Log Out</Menu.Item>
+                            <Menu.Item key="setting:7" onClick={toggleRegister} className={classNames({'hide' : user.id !== undefined})}>Register</Menu.Item>
                         </SubMenu>
                     </Menu>
                 </div>
 
                 <MDBRow>
-                    {this.showLists()}
-                    <AddAnotherList addList={this.addNewList} list={this.state.listsCollection}/>
+                    <div className={classNames({'hide' : currentBoard.id === undefined || user.id === undefined} )}>
+                        <Project project = {currentProject} activeBoard = {currentBoard} user = {user}/>
+                    </div>
+
                 </MDBRow>
 
-                {this.openRegister()}
-                {this.openLogin()}
+                {openRegister()}
+                {openLogin()}
+                {openProject()}
+                {openBoard()}
+                {openInitialPopup()}
             </MDBContainer>
 
         );
-    };
 }
 
 export default ToDosContainer;

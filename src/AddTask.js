@@ -5,8 +5,12 @@ import classNames from "classnames";
 import 'antd/dist/antd.css';
 import {apiHostName} from './StaticResources';
 
-var avaliableUsers = [
-];
+//COMMENT WITH HOST
+
+//UNCOMMENT WITH HOST
+    var avaliableUsers = [
+    ];
+    var allUsers = [];
 
 
 class AddTask extends Component {
@@ -19,7 +23,7 @@ class AddTask extends Component {
             taskTitle : '',
             taskPriority : 'High',
             taskType : 'Issue',
-            taskAssignee : '',
+            taskAssignee : {},
             id : '',
             listId : '',
             errorMsg : ''
@@ -42,11 +46,23 @@ class AddTask extends Component {
             this.setState({taskTitle: this.props.taskObj.title, taskDesc : this.props.taskObj.description, taskPriority : this.props.taskObj.priority, taskType : this.props.taskObj.type, taskAssignee : this.props.taskObj.assignee, listId : this.props.taskObj.listId, id: this.props.taskObj.id});
         }
         //UNCOMMENT WITH HOST
-        /*fetch(apiHostName+'/users')
-            .then(result=>result.json())
-            .then(items => items.forEach(elem => avaliableUsers.push(elem.name))
-            ).catch(error => console.log(error));*/
-        avaliableUsers = ['Mateusz Mateusz', 'Jakub Jakub', 'Mati Mati'];
+        if(avaliableUsers.length == 0){
+            fetch(apiHostName+'/users')
+                .then(result=>result.json())
+                .then((items) =>{
+                        items.forEach((elem) => {
+
+                            if(elem.name != null && elem.name != ''){
+                                avaliableUsers.push(elem.name);
+                                allUsers.push(elem);
+                            }
+                        });
+                    }
+                ).catch(error => console.log(error));
+        }
+
+
+
     };
 
 
@@ -75,8 +91,7 @@ class AddTask extends Component {
             description: this.state.taskDesc,
             priority: this.state.taskPriority,
             type:this.state.taskType,
-            assignee: this.state.taskAssignee ,
-            id : Math.random()*100+Math.random()*100,
+            asigneeId: this.state.taskAssignee.id ,
             listId: this.props.listId});
 
 
@@ -86,14 +101,15 @@ class AddTask extends Component {
     updateTask () {
         if(this.state.taskTitle === '') return this.setState({errorMsg: 'Please provide task title'});
         if(this.state.taskDesc === '') return this.setState({errorMsg: 'Please provide description'});
-        if(this.state.taskAssignee === '') return this.setState({errorMsg: 'Please provide Assignee'});
+        if(this.state.taskAssignee.name === '') return this.setState({errorMsg: 'Please provide Assignee'});
 
         this.props.updateTask({
             title: this.state.taskTitle,
             description: this.state.taskDesc,
             priority: this.state.taskPriority,
             type:this.state.taskType,
-            assignee: this.state.taskAssignee ,
+            asignee: this.state.taskAssignee ,
+            owner : this.props.user,
             id : this.state.id,
             listId: this.state.listId});
 
@@ -113,7 +129,14 @@ class AddTask extends Component {
         this.setState({taskTitle: event.target.value});
     }
     setAssignee(value, option){
-        this.setState({taskAssignee: value});
+        console.log(value);
+        for(var i in allUsers){
+                console.log(allUsers[i].name)
+            if(allUsers[i].name === value){
+                this.setState({taskAssignee: allUsers[i]})
+                break;
+            }
+        }
     }
 
 
@@ -178,12 +201,13 @@ class AddTask extends Component {
                                             placeholder="Assignee"
                                             onSelect = {this.setAssignee}
                                             filterOption={(inputValue, option) => option.props.children.toUpperCase().indexOf(inputValue.toUpperCase()) !== -1}
-                                            defaultValue = {this.props.taskObj !== undefined ? this.state.taskAssignee : ''}
+                                            defaultValue = {this.props.taskObj !== undefined ? this.props.taskObj.asignee.name : ''}
                                         />
                                     </div>
                                 </div>
                             </form>
                         </div>
+                        {JSON.stringify(this.state.taskObj)}
 
                     </MDBModalBody>
                     <MDBModalFooter className="noBackgroundColor noBorder">
