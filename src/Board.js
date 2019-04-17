@@ -16,20 +16,21 @@ function Board(props){
     const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
-        fetch(apiHostName+'columns')
-            .then(result=>result.json())
-            .then((items) =>{
-                setColumns(items);
-                }
-            ).catch(error => message.error(error))
-    },[]);
-
-    useEffect(() => {
         setLoggedUser(props.user);
     },[props.user]);
 
     useEffect(() => {
         setBoard(props.board);
+        fetch(apiHostName+'columns')
+            .then(result=>result.json())
+            .then((items) =>{
+                    if(items.length > 0){
+                        setColumns(items.filter((elem) =>{
+                            return (elem.boardId === props.board.id)
+                        } ));
+                    }
+                }
+            ).catch(error => message.error(error))
     },[props.board]);
 
     const addNewColumn = (name) => {
@@ -84,8 +85,6 @@ function Board(props){
 
     const cloneColumn = (passedList, relatedTasks) => {
 
-        var currentColumns = columns;
-
         var newColumn = {name: passedList.name+'_copy', boardId : board.id};
 
         const columnSpec = {
@@ -131,6 +130,8 @@ function Board(props){
 
                 });
 
+                newColumn.tasksList = passedTaskList;
+
 
 
             })
@@ -145,7 +146,7 @@ function Board(props){
     const showLists = () =>{
         return (
             columns.map(function (item, index) {
-                return <SingleList item={item} key={item.id} removeList={removeColumn} clone={cloneColumn} index={index} user={loggedUser}/>
+                return <SingleList item={item} key={JSON.stringify(item)} removeList={removeColumn} clone={cloneColumn} index={index} user={loggedUser} board={board}/>
             })
         );
     };
@@ -154,8 +155,10 @@ function Board(props){
     return (
             <MDBContainer className="deck">
                 <MDBRow>
-                    {showLists()}
-                    <div className={classNames({'hide' : loggedUser.id === undefined})}>
+
+
+                    <div className={classNames({'hide' : loggedUser.id === undefined || board.id === undefined})}>
+                        {showLists()}
                         <AddAnotherList addList={addNewColumn} list={columns}/>
                     </div>
 

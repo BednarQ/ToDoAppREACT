@@ -19,13 +19,13 @@ class AddTask extends Component {
 
         this.state = {
             modal: false,
-            taskDesc : '',
-            taskTitle : '',
-            taskPriority : 'High',
-            taskType : 'Issue',
-            taskAssignee : {},
-            id : '',
-            listId : '',
+            taskDesc : this.props.taskObj !== undefined ? this.props.taskObj.description :'',
+            taskTitle : this.props.taskObj !== undefined ? this.props.taskObj.title :'',
+            taskPriority : this.props.taskObj !== undefined ? this.props.taskObj.priority :'High',
+            taskType : this.props.taskObj !== undefined ? this.props.taskObj.type :'Issue',
+            taskAssignee :  this.props.taskObj !== undefined ? this.props.taskObj.asignee : {},
+            id : this.props.taskObj !== undefined ? this.props.taskObj.id : '',
+            listId : this.props.taskObj !== undefined ? this.props.taskObj.listId : '',
             errorMsg : ''
         };
 
@@ -42,9 +42,6 @@ class AddTask extends Component {
 
     componentDidMount() {
         this.setState({modal : !this.props.showModal});
-        if(this.props.taskObj !== undefined){
-            this.setState({taskTitle: this.props.taskObj.title, taskDesc : this.props.taskObj.description, taskPriority : this.props.taskObj.priority, taskType : this.props.taskObj.type, taskAssignee : this.props.taskObj.assignee, listId : this.props.taskObj.listId, id: this.props.taskObj.id});
-        }
         //UNCOMMENT WITH HOST
         if(avaliableUsers.length == 0){
             fetch(apiHostName+'/users')
@@ -129,9 +126,7 @@ class AddTask extends Component {
         this.setState({taskTitle: event.target.value});
     }
     setAssignee(value, option){
-        console.log(value);
         for(var i in allUsers){
-                console.log(allUsers[i].name)
             if(allUsers[i].name === value){
                 this.setState({taskAssignee: allUsers[i]})
                 break;

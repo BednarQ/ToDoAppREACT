@@ -41,13 +41,20 @@ function ToDosContainer(props) {
     },[]);
 
     useEffect(() => {
-        fetch(apiHostName+'boards')
-            .then(result=>result.json())
-            .then((items) =>{
-                    setBoards(items);
-                }
-            ).catch(error => message.error(error))
-    },[]);
+        if(currentProject.id != undefined){
+            fetch(apiHostName+'boards')
+                .then(result=>result.json())
+                .then((items) =>{
+                        if(items.length > 0){
+                            setBoards(items.filter((elem) =>{
+                                return (elem.projectId === currentProject.id)
+                            } ));
+                        }
+                    }
+                ).catch(error => message.error(error))
+        }
+
+    },[currentProject]);
 
     useEffect( () => {
         if(user.id === undefined){
@@ -97,7 +104,7 @@ function ToDosContainer(props) {
     };
     const openBoard = () =>{
         if (showBoard) {
-            return (<NewBoard   toggle={toggleBoard} showModal={showBoard} user={user} currentProject={currentProject} addBoard = {addBoard}/>);
+            return (<NewBoard toggle={toggleBoard} showModal={showBoard} user={user} currentProject={currentProject} addBoard = {addBoard}/>);
         }
     };
     const openProject = () =>{
@@ -121,6 +128,8 @@ function ToDosContainer(props) {
             for(var i in projects){
                 if(projects[i].id == item.key.split('_')[1]){
                     setCurrentProject(projects[i]);
+                    setCurrentBoard({});
+                    break;
                 }
             }
         }else if(item.key.includes('board_')){
@@ -147,6 +156,28 @@ function ToDosContainer(props) {
                     setProjects(projects.filter(item => item.id !== currentProject.id));
                     setCurrentProject({});
                     message.success('Project has been successfully deleted.');
+                })
+                .catch((error) => {
+                    message.error(error);
+                });
+        }else if(item.key === 'deletecurrentboard'){
+            const spec = {
+                method: 'DELETE',
+                body: '',
+                headers: {
+                    'Accept' : 'application/json',
+                    'Content-Type' : 'application/json'
+                }
+            };
+            //UNCOMMENT WITH HOST
+            fetch(apiHostName+'boards/'+currentBoard.id, spec)
+                .then((response) => {
+                    return response;
+                })
+                .then((jsonObject) => {
+                    setBoards(boards.filter(item => item.id !== currentBoard.id));
+                    setCurrentBoard({});
+                    message.success('Board has been successfully deleted.');
                 })
                 .catch((error) => {
                     message.error(error);
@@ -195,7 +226,7 @@ function ToDosContainer(props) {
                                 }
                             </Menu.ItemGroup>
                             <Menu.Item key="createBoard" onClick={toggleBoard} >Create new board</Menu.Item>
-                            <Menu.Item key="deleteboard">Delete current board</Menu.Item>
+                            <Menu.Item key="deletecurrentboard">Delete current board</Menu.Item>
                         </SubMenu>
                         <SubMenu title={<span className="submenu-title-wrapper"><Icon type="user" />{user.id === undefined? 'User' :user.name}</span>}>
                             <Menu.Item key="setting:5" onClick={toggleLogin} className={classNames({'hide' :user.id !== undefined})}>Log In</Menu.Item>

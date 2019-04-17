@@ -9,6 +9,7 @@ import classNames from "classnames";
 
 function SingleList(props) {
 
+
     const [style, setStyle] = useState('singleLine animated fadeInRight');
     const [taskList, setTaskList] = useState([]);
     const [isHovered, setHovered] = useState(false);
@@ -17,26 +18,39 @@ function SingleList(props) {
     const [isEdit, setEdit] = useState(false);
     const [task, setTask] = useState(undefined);
     const [loggedUser, setLoggedUser] = useState(props.user);
+    const [currentBoard, setCurrentBoard] = useState(props.board);
     const [loading, setLoading] = useState(false);
 
 
     useEffect(() => {
         setLoggedUser(props.user);
     },[props.user]);
+    useEffect(() => {
+        getTasks();
+    },[props.item]);
 
     useEffect(() => {
+        setCurrentBoard(props.board);
+        getTasks();
+
+    },[props.board]);
+
+    const getTasks = ()=>{
         fetch(apiHostName+'tasks')
             .then(result=>result.json())
             .then((items) =>{
-                    if(items.length > 0) setTaskList(items.filter((elem) => (elem.listId === item.id && elem.asignee.id === loggedUser.id)));
+                    if(items.length > 0){
+                        setTaskList(items.filter((elem) => (elem.listId === item.id && elem.asignee.id === loggedUser.id)));
+                        setLoading(false);
+                    }
                 }
-            ).catch(error => message.error(error))
-    },[taskList]);
+            ).catch(error => message.error(error));
+    }
 
 
     const addTask = (taskObj) => {
+        setLoading(true);
         taskObj.ownerId = loggedUser.id;
-        console.log(taskObj);
 
         const createTask = {
             method: 'POST',
@@ -53,7 +67,7 @@ function SingleList(props) {
                 return response.json();
             })
             .then((jsonObject) => {
-                setTaskList([...taskList, jsonObject]);
+                getTasks();
             })
             .catch((error) => {
                 console.log('Error ocurred on task creation: '+error);
@@ -64,7 +78,8 @@ function SingleList(props) {
     const cloneCurrentList = () => {
         setLoading(true);
         if(props.clone(item, JSON.stringify(taskList))){
-            setLoading(false);
+            getTasks();
+            console.log('in final');
         };
     }
 
@@ -91,7 +106,7 @@ function SingleList(props) {
             };
 
             //UNCOMMENT WITH HOST
-            fetch(apiHostName+'columns/'+item.id, updateColumn)
+            fetch(apiHostName+'columns', updateColumn)
                 .then((response) => {
                     return response.json();
                 })
@@ -132,6 +147,7 @@ function SingleList(props) {
     };
 
     const removeTask = (uID) => {
+        setLoading(true);
         const spec = {
             method: 'DELETE',
             body: '',
@@ -146,7 +162,7 @@ function SingleList(props) {
                 return response;
             })
             .then((jsonObject) => {
-                setTaskList(taskList.filter(item => item.id !== uID));
+                getTasks();
                 message.success('Task has been successfully deleted.');
             })
             .catch((error) => {
@@ -156,30 +172,29 @@ function SingleList(props) {
     };
 
     const updateTask = (task) => {
-        for(var elem in taskList){
-            if(taskList[elem].id === task.id) {
-                taskList[elem] = task;
-                break;
+        setLoading(true);
+        const updateTask = {
+            method: 'POST',
+            body: JSON.stringify(task),
+            headers: {
+                'Accept' : 'application/json',
+                'Content-Type' : 'application/json'
             }
-        }
-    }
+        };
 
-    const showTasks = () => {
-        if(loggedUser.id !== undefined){
-            taskList.map((item) => {
-                if(item.asignee.id === loggedUser.id) {
-                    return <SingleTask
-                        taskObj={item}
-                        removeTask={removeTask}
-                        key={JSON.stringify(item)}
-                        toggleEdit={editTask}
-                    />
-                }
-
+        //UNCOMMENT WITH HOST
+        fetch(apiHostName+'tasks', updateTask)
+            .then((response) => {
+                return response.json();
+            })
+            .then((jsonObject) => {
+                getTasks();
+            })
+            .catch((error) => {
+                console.log('Error ocurred on task creation: '+error);
             });
-        }
-    }
 
+    };
 
     return (
 
